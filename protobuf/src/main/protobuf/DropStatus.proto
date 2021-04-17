@@ -1,0 +1,17 @@
+// protoc com/risetek/yun74/shared/DropStatus.proto --java_out=.
+syntax = "proto3";
+
+package com.risetek.yun74.shared;
+// [START java_declaration]
+option java_package = "com.risetek.yun74.shared.protobuf";
+option java_outer_classname = "DropStatus";
+
+message Status {
+	string ident = 1;
+	int64 start = 2;	// Drop启动时间
+
+	int64 sessions = 3;	// 当前会话数量
+	int64 timestamp = 4;// 本次采集时间点
+	int64 beats = 5;
+	int64 updates = 6;
+}

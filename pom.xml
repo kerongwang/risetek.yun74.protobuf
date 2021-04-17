@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+ <modelVersion>4.0.0</modelVersion>
+
+ <groupId>com.risetek</groupId>
+ <artifactId>yun74.protobuf</artifactId>
+ <version>1.0-SNAPSHOT</version>
+ <packaging>pom</packaging>
+ <properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <maven-war.version>3.3.1</maven-war.version>
+  <maven-processor.version>4.0-rc1</maven-processor.version>
+  <jdk.version>11</jdk.version>
+  <maven-source.version>3.2.0</maven-source.version>
+  <maven-compiler.version>3.8.1</maven-compiler.version>
+  <guice.version>4.2.3</guice.version>
+  <protobuf-version>4.0.0-rc-2</protobuf-version>
+
+  <slf4j-version>1.7.13</slf4j-version>
+  <!-- SSH Deploy -->
+  <deploy-target>drop.jar</deploy-target>
+  <!-- server -->
+  <guice.version>3.0</guice.version>
+  <protobuf-version>3.5.1</protobuf-version>
+  <jib-maven-plugin.version>1.7.0</jib-maven-plugin.version>
+  <maven.build.timestamp.format>yyyyMMdd-HHmmssSSS</maven.build.timestamp.format>
+ </properties>
+ <dependencyManagement>
+  <dependencies>
+ <!-- DI dependencies -->
+ <dependency>
+  <groupId>com.google.inject</groupId>
+  <artifactId>guice</artifactId>
+  <version>${guice.version}</version>
+ </dependency>
+ <dependency>
+  <groupId>com.google.protobuf</groupId>
+  <artifactId>protobuf-java</artifactId>
+  <version>${protobuf-version}</version>
+ </dependency>
+ <dependency>
+  <groupId>com.google.protobuf</groupId>
+  <artifactId>protobuf-bom</artifactId>
+  <version>${protobuf-version}</version>
+  <type>pom</type>
+ </dependency>
+  </dependencies>
+ </dependencyManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler.version}</version>
+          <configuration>
+            <source>${jdk.version}</source>
+            <target>${jdk.version}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <phase>package</phase>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <!-- Workaround for https://issues.apache.org/jira/browse/MSOURCES-95 -->
+            <includes>
+              <include>**/**</include>
+            </includes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.bsc.maven</groupId>
+          <artifactId>maven-processor-plugin</artifactId>
+          <version>${maven-processor.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${maven-war.version}</version>
+          <executions>
+            <execution>
+              <id>default-war</id>
+              <phase>package</phase>
+              <goals>
+                <goal>war</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+ <modules>
+  <module>protobuf</module>
+  <module>client</module>
+ </modules>
+</project>

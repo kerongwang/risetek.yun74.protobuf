@@ -1,0 +1,14 @@
+// protoc com/risetek/yun74/shared/DropStatistics.proto --java_out=.
+syntax = "proto2";
+
+package com.risetek.yun74.shared;
+// [START java_declaration]
+option java_package = "com.risetek.yun74.shared";
+option java_outer_classname = "DropStatisticsPB";
+
+message Statistics {
+  required int64 start = 1;	// Start DateTime
+  required int32 beats = 2;
+  required int32 updates = 3;
+  required int32 statistics = 4;
+}

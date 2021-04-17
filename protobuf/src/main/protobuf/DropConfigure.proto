@@ -1,0 +1,29 @@
+// protoc com/risetek/yun74/shared/DropConfigure.proto --java_out=.
+syntax = "proto2";
+
+package com.risetek.yun74.shared;
+// [START java_declaration]
+option java_package = "com.risetek.yun74.shared.protobuf";
+option java_outer_classname = "DropConfigure";
+
+message Configure {
+  required string drops_url = 1;
+  required string session_status_url = 2;
+  required string jdbc_url = 3;
+  required string drop_dbname = 4;
+  required string drop_dbpassword = 5;
+  // Drop维持的一次会话最长时间
+  required int32 session_valid_seconds = 6; // 2*60*60;
+  // Dorp端轮询Query端的时间间隔
+  required int32 session_pull_inteval_seconds = 7; //		= 3*60;
+  // Drop端维持NAT通道的Punch时间间隔
+  required int32 session_punch_interval_seconds = 8; //	= 30;
+  // Session Manage 轮询间隔
+  required int32 session_maintance_inteval = 9; //= 4;
+  // Drop端运行时编号
+  required string drop_ident = 10;
+
+  required string base_url = 11;
+  required string persistence_session_url = 12;
+  required string persistence_record_url = 13;
+}

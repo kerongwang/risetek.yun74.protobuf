@@ -1,0 +1,20 @@
+// protoc com/risetek/yun74/shared/PduRecord.proto --java_out=.
+syntax = "proto2";
+
+package com.risetek.yun74.shared;
+// [START java_declaration]
+option java_package = "com.risetek.yun74.shared.protobuf";
+option java_outer_classname = "DropRecord";
+
+message PduRecord {
+  message PDU {
+  	message RECORD {
+  		required string oid = 1;					// OID
+  		required string variable = 2;			// Value
+  	}
+    required string session = 1;				// Session UUID
+    required int64 timestamp = 2;				// PDU timestamp
+    repeated RECORD records = 3;
+  }
+  repeated PDU pdus = 1;
+}

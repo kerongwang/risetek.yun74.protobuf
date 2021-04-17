@@ -1,0 +1,35 @@
+// protoc com/risetek/yun74/shared/SessionSummary.proto --java_out=.
+syntax = "proto2";
+
+package com.risetek.yun74.shared;
+// [START java_declaration]
+option java_package = "com.risetek.yun74.shared.protobuf";
+option java_outer_classname = "SessionSummary";
+
+message Sessions {
+  message Summary {
+    required string id = 1;				// Device ID
+    required string uuid = 2;			// Session UUID
+	required int64 start = 3;			// Session start
+	required int32 period = 4;			// Session period
+	required int64 uptime = 5;			// Device up time
+	optional string wireType = 6;		// wire type 
+	required string model = 7;			// Device model
+	required string version = 8;		// Device software version
+	optional string ipaddress = 9;		// ip address
+	required string agent = 10;			// query agent NAT address with port
+	optional string cops = 11;			// Station Location
+	optional string network = 12;		// network systems
+	required int32 records = 13;		// total variables in PDUs
+	required int32 sampling= 14;		// total sampling count
+	required int32 lost = 15;			// total lost sampling count
+	required int32 rtt = 16;			// average RTT
+	optional int32 strength = 17;		// average CSQ value
+	optional string band = 18;			// band value
+	optional float in_min_flow = 19;	// PPP in flow min-value with in session
+	optional float out_min_flow = 20;	// PPP out flow min-value with in session
+	optional float in_max_flow = 21;	// PPP in flow max-value with in session
+	optional float out_max_flow = 22;	// PPP out flow max-value with in session
+  }
+  repeated Summary summary = 1;
+}
