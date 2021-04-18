@@ -2,5 +2,5 @@
 **/.project
 **/.settings/
 **/.classpath
-/dependency-reduced-pom.xml
+**/dependency-reduced-pom.xml
 protobuf/src/main/generated/
