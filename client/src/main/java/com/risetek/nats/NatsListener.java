@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.risetek.storage.TDEngine;
+import com.risetek.storage.IEngine;
 import com.risetek.yun74.shared.protobuf.SessionStatus.SessionBrief;
 
 import io.nats.client.ConnectionListener.Events;
@@ -17,7 +17,7 @@ import io.nats.client.Options;
 
 @Singleton
 public class NatsListener extends Thread {
-	@Inject TDEngine storage;
+	@Inject IEngine storage;
 
 	@Override
 	public void start() {

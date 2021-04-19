@@ -14,7 +14,7 @@ import com.risetek.yun74.shared.protobuf.SessionStatus.SessionBrief.Status;
 import com.taosdata.jdbc.TSDBDriver;
 
 @Singleton
-public class TDEngine {
+public class TDEngine implements IEngine {
 
 	private final String jdbcUrl = "jdbc:TAOS://127.0.0.1";
 
@@ -39,7 +39,7 @@ public class TDEngine {
 			// use database
 			stmt.executeUpdate("USE yun74");
 			
-			stmt.executeUpdate("CREATE STABLE IF NOT EXISTS meters (ts TIMESTAMP, sysup BIGINT) TAGS (groupdId INT);");			
+			stmt.executeUpdate("CREATE STABLE IF NOT EXISTS meters (ts TIMESTAMP, sysup BIGINT) TAGS (version BINARY(20), groupdId INT);");			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -50,9 +50,15 @@ public class TDEngine {
 			e.printStackTrace();
 		}
 	}
+
+	private String makeTableName(Status status) {
+		String name = new StringBuffer().append("V0T").append(status.getId()).append(status.getModel()).toString();
+		return name.trim().replace(" ", "_").replace(".", "_").replace("-", "_");
+	}
 	
 	private PreparedStatement sessionStatement = null;
-	private final String sessionSql = "INSERT INTO ? USING meters TAGS (?) VALUES (NOW, ?)";
+	private final String sessionSql = "INSERT INTO ? USING meters TAGS (?,?) VALUES (NOW, ?)";
+	@Override
 	public void upInsert(SessionBrief brief) throws SQLException {
 		if(null == conn || null == sessionStatement)
 			return;
@@ -63,9 +69,10 @@ public class TDEngine {
 	
 	private void upInsertStatus(Status status) {
 		try {
-			sessionStatement.setString(1, "T" + status.getId());
-			sessionStatement.setInt(2, 2);
-			sessionStatement.setLong(3, status.getSysup());
+			sessionStatement.setString(1, makeTableName(status));
+			sessionStatement.setString(2, status.getVersion().isEmpty()?null:status.getVersion());
+			sessionStatement.setInt(3, 0);
+			sessionStatement.setLong(4, status.getSysup());
 			sessionStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

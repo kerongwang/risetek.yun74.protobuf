@@ -17,4 +17,5 @@ ssh $REMOTE_NAME docker build $BUILD_DIR/docker/ -t devops/$PROJECT_NAME
 ## clean up
 ssh $REMOTE_NAME "rm -rf $BUILD_DIR"
 ssh $REMOTE_NAME docker stop $PROJECT_NAME
-ssh $REMOTE_NAME docker run -d --rm --name $PROJECT_NAME -p 6030-6042:6030-6042 devops/$PROJECT_NAME
+## ssh $REMOTE_NAME docker run -d --rm --name $PROJECT_NAME -v/mnt/wangyc_test/taos/lib:/var/lib/taos -v/mnt/wangyc_test/taos/log:/var/log/taos devops/$PROJECT_NAME
+ssh $REMOTE_NAME docker run -d --rm --name $PROJECT_NAME devops/$PROJECT_NAME

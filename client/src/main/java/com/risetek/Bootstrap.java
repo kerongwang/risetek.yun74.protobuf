@@ -4,6 +4,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.risetek.nats.NatsListener;
+import com.risetek.storage.DebugEngine;
+import com.risetek.storage.IEngine;
 import com.risetek.storage.TDEngine;
 
 public class Bootstrap {
@@ -25,7 +27,8 @@ public class Bootstrap {
 			new AbstractModule() {
 				@Override
 				protected void configure() {
-					bind(TDEngine.class);
+					bind(IEngine.class).to(TDEngine.class).asEagerSingleton();
+//					bind(IEngine.class).to(DebugEngine.class).asEagerSingleton();
 					bind(NatsListener.class);
 				}
 			}
