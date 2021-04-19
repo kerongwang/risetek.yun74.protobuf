@@ -9,8 +9,6 @@ import com.risetek.storage.TDEngine;
 public class Bootstrap {
 
 	public static void main(String[] args) {
-		System.out.println("Hello");
-
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 		    public void run() {
 		    	try {
@@ -18,7 +16,7 @@ public class Bootstrap {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-		    	
+
 		    	System.out.println("JVM Shutdown");
 		    }
 		 });

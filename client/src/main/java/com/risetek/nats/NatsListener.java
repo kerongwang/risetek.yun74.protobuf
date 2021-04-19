@@ -17,9 +17,10 @@ import io.nats.client.Options;
 
 @Singleton
 public class NatsListener extends Thread {
+	@Inject TDEngine storage;
+
 	@Override
 	public void start() {
-		System.out.println("nats start: " + storage);
 		Options options = new Options.Builder().server("nats://:4222").connectionListener((conn, type) -> {
 			if(Events.CONNECTED == type) {
 				// query (topic) 实时数据
@@ -43,6 +44,4 @@ public class NatsListener extends Thread {
 			e.printStackTrace();
 		}
 	}
-
-	@Inject TDEngine storage;
 }
