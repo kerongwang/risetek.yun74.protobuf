@@ -39,7 +39,7 @@ public class TDEngine {
 			// use database
 			stmt.executeUpdate("USE yun74");
 			
-			stmt.executeUpdate("CREATE STABLE IF NOT EXISTS meters (ts TIMESTAMP, sysup TIMESTAMP) TAGS (groupdId INT);");			
+			stmt.executeUpdate("CREATE STABLE IF NOT EXISTS meters (ts TIMESTAMP, sysup BIGINT) TAGS (groupdId INT);");			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
