@@ -33,7 +33,7 @@
       <configuration>
        <protocVersion>3.1.0</protocVersion>
        <inputDirectories>
-        <include>src/main/protobuf</include>
+        <include>src/main/proto</include>
        </inputDirectories>
        <outputDirectory>src/main/generated</outputDirectory>
       </configuration>

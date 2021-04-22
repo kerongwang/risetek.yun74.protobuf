@@ -1,0 +1,17 @@
+version: '2'
+services:
+ tdengine:
+  image: tdengine/tdengine
+  restart: always
+  container_name: tdengine
+
+ collector:
+  image: devops/risetek.engine
+  ports:
+   - "19001:8080/tcp"
+  environment:
+   TDENGINE_HOST: "tdengine"
+  links:
+   - tdengine
+  restart: always
+  container_name: risetek.engine

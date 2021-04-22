@@ -18,11 +18,15 @@ import com.taosdata.jdbc.TSDBDriver;
 @Singleton
 public class TDEngine implements IEngine {
 
-	private final String jdbcUrl = "jdbc:TAOS://127.0.0.1";
+	private final String jdbcUrl = "jdbc:TAOS://" + System.getenv("TDENGINE_HOST");
 
 	private Connection conn = null;
 
-	public TDEngine() {
+	private boolean connected = false;
+	private void ensureConnected() {
+		if(connected)
+			return;
+		System.out.println("ENV:  " + jdbcUrl);
 		try {
 			Class.forName("com.taosdata.jdbc.TSDBDriver");
 			Properties connProps = new Properties();
@@ -55,8 +59,9 @@ public class TDEngine implements IEngine {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		connected = true;
 	}
-
+	
 	private String makeTableName(Status status) {
 		String name = new StringBuffer().append("V0T").append(status.getId()).append(status.getModel()).toString();
 		return name.trim().replace(" ", "_").replace(".", "_").replace("-", "_");
@@ -66,6 +71,7 @@ public class TDEngine implements IEngine {
 	private final String sessionSql = "INSERT INTO ? USING meters TAGS (?,?) VALUES (NOW, ?, ?, ?, ?)";
 	@Override
 	public void upInsert(SessionBrief brief) throws SQLException {
+		ensureConnected();
 		if(null == conn || null == sessionStatement)
 			return;
 
