@@ -21,7 +21,7 @@ public class NatsListener extends Thread {
 
 	@Override
 	public void start() {
-		Options options = new Options.Builder().server("nats://:4222").connectionListener((conn, type) -> {
+		Options options = new Options.Builder().server("nats://mq.yun74.com:4222").connectionListener((conn, type) -> {
 			if(Events.CONNECTED == type) {
 				// query (topic) 实时数据
 				conn.createDispatcher(msg -> QueryRealMessageListener(msg)).subscribe("yun74.drop.query.real");
